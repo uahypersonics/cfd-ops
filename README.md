@@ -4,6 +4,7 @@ Operations for transforming, extracting, remapping, and combining CFD datasets
 built on the [cfd-io](https://github.com/uahypersonics/cfd-io) data model.
 
 [![Test](https://github.com/uahypersonics/cfd-ops/actions/workflows/test.yml/badge.svg)](https://github.com/uahypersonics/cfd-ops/actions/workflows/test.yml)
+[![PyPI](https://img.shields.io/pypi/v/cfd-ops)](https://pypi.org/project/cfd-ops/)
 [![Docs](https://img.shields.io/badge/docs-mkdocs-blue)](https://uahypersonics.github.io/cfd-ops/)
 [![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-≥3.11-blue.svg)](https://www.python.org/downloads/)
@@ -21,11 +22,7 @@ Full documentation: https://uahypersonics.github.io/cfd-ops
 
 ## Citation
 
-If `cfd-io` contributes to published work, please cite the software release:
-
-- DOI: [10.5281/zenodo.18926272](https://doi.org/10.5281/zenodo.18926272)
-
-GitHub also provides machine-readable citation metadata via `CITATION.cff` in this repository.
+If `cfd-ops` contributes to published work, please cite via the `CITATION.cff` in this repository.
 
 ## Code Style
 
@@ -48,15 +45,10 @@ This project uses [Semantic Versioning](https://semver.org/) (`vMAJOR.MINOR.PATC
 - **MINOR** (`v0.3.0`, `v0.4.0`): New features, backward-compatible
 - **PATCH** (`v0.3.1`, `v0.3.2`): Bug fixes, minor corrections
 
-To publish a new version to [PyPI](https://pypi.org/project/cfd-io/):
+To publish a new version to [PyPI](https://pypi.org/project/cfd-ops/):
 
-1. Update the version in `pyproject.toml`
-2. Regenerate the API architecture diagram:
-   ```bash
-   pydeps src/cfd_io --noshow --max-bacon=4 --cluster -o docs/assets/architecture.svg
-   ```
-3. Commit and push to `main`
-4. Tag and push:
+1. Commit and push to `main`
+2. Tag and push:
    ```bash
    git tag -a vMAJOR.MINOR.PATCH -m "Release vMAJOR.MINOR.PATCH"
    git push origin vMAJOR.MINOR.PATCH
