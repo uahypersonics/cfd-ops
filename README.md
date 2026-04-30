@@ -4,6 +4,8 @@ Operations for transforming, extracting, remapping, and combining CFD datasets
 built on the [cfd-io](https://github.com/uahypersonics/cfd-io) data model.
 
 [![Test](https://github.com/uahypersonics/cfd-ops/actions/workflows/test.yml/badge.svg)](https://github.com/uahypersonics/cfd-ops/actions/workflows/test.yml)
+[![codecov](https://codecov.io/gh/uahypersonics/cfd-ops/branch/main/graph/badge.svg)](https://codecov.io/gh/uahypersonics/cfd-ops)
+<!-- [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.XXXXXXXX.svg)](https://doi.org/10.5281/zenodo.XXXXXXXX) -->
 [![PyPI](https://img.shields.io/pypi/v/cfd-ops)](https://pypi.org/project/cfd-ops/)
 [![Docs](https://img.shields.io/badge/docs-mkdocs-blue)](https://uahypersonics.github.io/cfd-ops/)
 [![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](LICENSE)
