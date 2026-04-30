@@ -8,6 +8,7 @@ from cfd_ops.operations.extend import extend_dataset
 from cfd_ops.operations.merge import merge_datasets, merge_files_to_hdf5, write_merged_hdf5
 from cfd_ops.operations.rotate import rotate_dataset
 from cfd_ops.operations.translate import translate_dataset
+from cfd_ops.operations.transpose import transpose_dataset
 
 # --------------------------------------------------
 # public exports
@@ -19,5 +20,6 @@ __all__ = [
     "merge_files_to_hdf5",
     "rotate_dataset",
     "translate_dataset",
+    "transpose_dataset",
     "write_merged_hdf5",
 ]

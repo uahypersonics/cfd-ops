@@ -17,6 +17,7 @@ from cfd_ops.operations import (
     merge_files_to_hdf5,
     rotate_dataset,
     translate_dataset,
+    transpose_dataset,
 )
 
 # --------------------------------------------------
@@ -243,6 +244,55 @@ def translate_command(
 
     # write transformed dataset
     _write_dataset(output_path, translated, output_grid=output_grid)
+
+
+@app.command("transpose")
+def transpose_command(
+    input_path: Annotated[Path, typer.Argument(help="Input dataset file")],
+    output_path: Annotated[Path, typer.Argument(help="Output dataset file")],
+    axes: Annotated[
+        str,
+        typer.Option(
+            "--axes",
+            help="Axis pair to swap: ij, ik, or jk (order ignored)",
+        ),
+    ],
+    input_grid: Annotated[
+        Path | None,
+        typer.Option("--input-grid", help="Companion grid file for split-format input"),
+    ] = None,
+    output_grid: Annotated[
+        Path | None,
+        typer.Option("--output-grid", help="Companion grid file for split-format output"),
+    ] = None,
+    it: Annotated[int, typer.Option("--it", help="Input timestep index for split-format input")] = 1,
+) -> None:
+    """Transpose two structured grid axes (i, j, k).
+
+    Swaps the requested pair of axes in grid coordinates and in every
+    flow field with at least three dimensions. Useful when an external
+    file uses a transposed orientation relative to your downstream
+    pipeline (e.g. rows/columns reversed in 2-D data).
+
+    \b
+    Examples:
+        # swap streamwise and wall-normal axes
+        cfd-ops transpose in.h5 out.h5 --axes ij
+
+        # swap streamwise and spanwise axes
+        cfd-ops transpose in.h5 out.h5 --axes ik
+
+        # swap wall-normal and spanwise axes
+        cfd-ops transpose in.h5 out.h5 --axes jk
+    """
+    # read input dataset
+    dataset = _read_dataset(input_path, input_grid=input_grid, it=it)
+
+    # transpose requested axis pair
+    transposed = transpose_dataset(dataset, axes=axes)
+
+    # write transformed dataset
+    _write_dataset(output_path, transposed, output_grid=output_grid)
 
 
 @app.command("extend")
