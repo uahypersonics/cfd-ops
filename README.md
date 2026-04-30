@@ -5,12 +5,12 @@ built on the [cfd-io](https://github.com/uahypersonics/cfd-io) data model.
 
 [![Test](https://github.com/uahypersonics/cfd-ops/actions/workflows/test.yml/badge.svg)](https://github.com/uahypersonics/cfd-ops/actions/workflows/test.yml)
 [![codecov](https://codecov.io/gh/uahypersonics/cfd-ops/branch/main/graph/badge.svg)](https://codecov.io/gh/uahypersonics/cfd-ops)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19922271.svg)](https://doi.org/10.5281/zenodo.19922271)
 [![PyPI](https://img.shields.io/pypi/v/cfd-ops)](https://pypi.org/project/cfd-ops/)
 [![Docs](https://img.shields.io/badge/docs-mkdocs-blue)](https://uahypersonics.github.io/cfd-ops/)
 [![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-≥3.11-blue.svg)](https://www.python.org/downloads/)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
-<!-- DOI badge: [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.XXXXXXXX.svg)](https://doi.org/10.5281/zenodo.XXXXXXXX) -->
 
 
 ## Install
