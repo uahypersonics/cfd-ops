@@ -85,15 +85,36 @@ def rotate_command(
     ] = False,
     input_grid: Annotated[
         Path | None,
-        typer.Option("--input-grid", help="Companion grid file for split-format input"),
+        typer.Option("--grid-in", "-g", help="Companion grid file for split-format input"),
     ] = None,
     output_grid: Annotated[
         Path | None,
-        typer.Option("--output-grid", help="Companion grid file for split-format output"),
+        typer.Option("--grid-out", "-G", help="Companion grid file for split-format output"),
     ] = None,
     it: Annotated[int, typer.Option("--it", help="Input timestep index for split-format input")] = 1,
 ) -> None:
-    """Rotate dataset coordinates and vector fields."""
+    """Rotate dataset coordinates and vector fields.
+
+    Recognized velocity components (uvel/vvel/wvel and similar pairs) are
+    rotated together with the grid coordinates unless --no-rotate-flow
+    is given. Format conversion happens for free when input and output
+    extensions differ.
+
+    \b
+    Examples:
+        # rotate 30 deg about z, also rotate velocity vectors
+        cfd-ops rotate in.h5 out.h5 --axis z --angle 30
+
+        # rotate about a non-origin pivot
+        cfd-ops rotate in.h5 out.h5 --axis y --angle 15 \\
+            --origin 0.5 0.0 0.0
+
+        # rotate grid only, leave flow components untouched
+        cfd-ops rotate in.h5 out.h5 --axis x --angle 90 --no-rotate-flow
+
+        # split-format in, HDF5 out
+        cfd-ops rotate flow.s8 out.h5 --axis z --angle 45 -g grid.s8
+    """
     # read input dataset
     dataset = _read_dataset(input_path, input_grid=input_grid, it=it)
 
@@ -152,11 +173,11 @@ def cut_command(
     ] = 1,
     input_grid: Annotated[
         Path | None,
-        typer.Option("--input-grid", help="Companion grid file for split-format input"),
+        typer.Option("--grid-in", "-g", help="Companion grid file for split-format input"),
     ] = None,
     output_grid: Annotated[
         Path | None,
-        typer.Option("--output-grid", help="Companion grid file for split-format output"),
+        typer.Option("--grid-out", "-G", help="Companion grid file for split-format output"),
     ] = None,
     it: Annotated[int, typer.Option("--it", help="Input timestep index for split-format input")] = 1,
 ) -> None:
@@ -222,15 +243,34 @@ def translate_command(
     dz: Annotated[float, typer.Option("--dz", help="Translation in z")] = 0.0,
     input_grid: Annotated[
         Path | None,
-        typer.Option("--input-grid", help="Companion grid file for split-format input"),
+        typer.Option("--grid-in", "-g", help="Companion grid file for split-format input"),
     ] = None,
     output_grid: Annotated[
         Path | None,
-        typer.Option("--output-grid", help="Companion grid file for split-format output"),
+        typer.Option("--grid-out", "-G", help="Companion grid file for split-format output"),
     ] = None,
     it: Annotated[int, typer.Option("--it", help="Input timestep index for split-format input")] = 1,
 ) -> None:
-    """Translate dataset coordinates by constant offsets."""
+    """Translate dataset coordinates by constant offsets.
+
+    Flow variables are unchanged; only grid coordinates shift. Format
+    conversion happens for free when input and output extensions differ.
+    Grid flags are required only for split-format files (.s8/.s4/.cd).
+
+    \b
+    Examples:
+        # shift downstream by 1.0 in x (HDF5 round-trip)
+        cfd-ops translate in.h5 out.h5 --dx 1.0
+
+        # split-format in, HDF5 out
+        cfd-ops translate flow.s8 out.h5 --dx 0.5 -g grid.s8
+
+        # HDF5 in, split-format out
+        cfd-ops translate in.h5 flow.s8 --dy -0.1 -G grid.s8
+
+        # multi-axis shift
+        cfd-ops translate in.h5 out.h5 --dx 1.0 --dy 0.5 --dz -0.25
+    """
     # read input dataset
     dataset = _read_dataset(input_path, input_grid=input_grid, it=it)
 
@@ -259,11 +299,11 @@ def transpose_command(
     ],
     input_grid: Annotated[
         Path | None,
-        typer.Option("--input-grid", help="Companion grid file for split-format input"),
+        typer.Option("--grid-in", "-g", help="Companion grid file for split-format input"),
     ] = None,
     output_grid: Annotated[
         Path | None,
-        typer.Option("--output-grid", help="Companion grid file for split-format output"),
+        typer.Option("--grid-out", "-G", help="Companion grid file for split-format output"),
     ] = None,
     it: Annotated[int, typer.Option("--it", help="Input timestep index for split-format input")] = 1,
 ) -> None:
@@ -309,15 +349,32 @@ def extend_command(
     ] = 0.0,
     input_grid: Annotated[
         Path | None,
-        typer.Option("--input-grid", help="Companion grid file for split-format input"),
+        typer.Option("--grid-in", "-g", help="Companion grid file for split-format input"),
     ] = None,
     output_grid: Annotated[
         Path | None,
-        typer.Option("--output-grid", help="Companion grid file for split-format output"),
+        typer.Option("--grid-out", "-G", help="Companion grid file for split-format output"),
     ] = None,
     it: Annotated[int, typer.Option("--it", help="Input timestep index for split-format input")] = 1,
 ) -> None:
-    """Extend dataset by padding along one index axis."""
+    """Extend dataset by padding along one index axis.
+
+    Pads ``before`` cells before index 0 and ``after`` cells after the
+    last index along the requested axis. Mode ``edge`` repeats the
+    boundary slice; mode ``constant`` fills with --constant-value.
+
+    \b
+    Examples:
+        # add 5 ghost cells before i=0 (edge replication)
+        cfd-ops extend in.h5 out.h5 --axis i --before 5
+
+        # pad both ends in j with constant zeros
+        cfd-ops extend in.h5 out.h5 --axis j --before 2 --after 2 \\
+            --mode constant --constant-value 0.0
+
+        # add 10 cells after the last spanwise index
+        cfd-ops extend in.h5 out.h5 --axis k --after 10
+    """
     # read input dataset
     dataset = _read_dataset(input_path, input_grid=input_grid, it=it)
 
@@ -358,7 +415,27 @@ def merge_command(
     grid_atol: Annotated[float, typer.Option("--grid-atol", help="Absolute tolerance for grid checks")] = 1.0e-12,
     dtype: Annotated[str, typer.Option("--dtype", help="Output dtype for HDF5 datasets")] = "f",
 ) -> None:
-    """Merge snapshots from multiple files into one multi-timestep HDF5 file."""
+    """Merge snapshots from multiple files into one multi-timestep HDF5 file.
+
+    Each --input file contributes one timestep. Grids are checked for
+    consistency (drift tolerated under --allow-grid-drift).
+
+    \b
+    Examples:
+        # merge three HDF5 snapshots
+        cfd-ops merge merged.h5 \\
+            --input snap_001.h5 --input snap_002.h5 --input snap_003.h5
+
+        # merge with companion grids for split-format inputs
+        cfd-ops merge merged.h5 \\
+            --input flow_001.s8 --grid grid.s8 \\
+            --input flow_002.s8 --grid grid.s8
+
+        # tolerate small grid drift between snapshots
+        cfd-ops merge merged.h5 \\
+            --input a.h5 --input b.h5 \\
+            --allow-grid-drift --grid-rtol 1e-8
+    """
     # validate required input list
     if len(input_files) == 0:
         raise typer.BadParameter("--input requires at least one file")

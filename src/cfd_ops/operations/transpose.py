@@ -12,7 +12,6 @@ from cfd_io import Dataset, Field, StructuredGrid
 
 from cfd_ops.operations.common import as_field, copy_attrs, require_structured_grid
 
-
 # --------------------------------------------------
 # type aliases
 # --------------------------------------------------
