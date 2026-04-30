@@ -27,6 +27,7 @@ keywords = ["cfd", "operations", "transform", "extract", "remap", "dataset"]
 dependencies = [
     "numpy>=1.24.0",
     "cfd-io>=0.2.0",
+    "typer>=0.12.0",
 ]
 
 [project.optional-dependencies]
@@ -44,6 +45,9 @@ docs = [
 [project.urls]
 Homepage = "https://github.com/uahypersonics/cfd-ops"
 Repository = "https://github.com/uahypersonics/cfd-ops"
+
+[project.scripts]
+cfd-ops = "cfd_ops.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
