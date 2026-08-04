@@ -17,7 +17,6 @@ edit_uri: edit/main/docs/
 
 # --------------------------------------------------
 # theme configuration
-# uses Material for MkDocs: https://squidfunk.github.io/mkdocs-material/
 # --------------------------------------------------
 theme:
   name: material
@@ -55,17 +54,6 @@ theme:
 # --------------------------------------------------
 plugins:
   - search
-  - mkdocstrings:
-      handlers:
-        python:
-          paths: [src]
-          options:
-            show_source: false
-            show_root_heading: true
-            show_root_full_path: false
-            heading_level: 2
-            docstring_style: google
-            members_order: source
 
 # --------------------------------------------------
 # markdown extensions
@@ -93,5 +81,19 @@ markdown_extensions:
 nav:
   - Home: index.md
   - Installation: installation.md
+  - User Guide:
+    - Overview: user_guide/index.md
+    - Workflow: user_guide/workflow.md
+    - Configuration: user_guide/configuration.md
+  - Theory:
+    - theory/index.md
+  - CLI Reference:
+    - cli_reference/index.md
   - API Reference:
     - api/index.md
+  - Validation and Verification:
+    - vnv/index.md
+    - Verification: vnv/verification/index.md
+    - Validation: vnv/validation/index.md
+  - Examples: examples.md
+  - Nomenclature: nomenclature.md
