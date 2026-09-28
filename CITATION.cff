@@ -11,7 +11,7 @@ authors:
 repository-code: "https://github.com/uahypersonics/cfd-ops"
 url: "https://uahypersonics.github.io/cfd-ops"
 doi: "10.5281/zenodo.19922271"
-license: BSD-3-Clause
+license: GPL-3.0-or-later
 keywords:
   - computational fluid dynamics
   - dataset operations
